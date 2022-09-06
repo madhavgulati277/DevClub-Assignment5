@@ -1,0 +1,124 @@
+{% extends 'users/base.html' %} 
+{% load static %} 
+
+{% block title %} 
+{{course}}
+{% endblock %} 
+{% block scripts_and_styles %} 
+<link href = '{% static "grades/course.css" %}' rel="stylesheet">
+<script defer src="{% static 'grades/course.js' %}"></script>
+<script defer src="{% static 'grades/course2.js' %}"></script>
+{% endblock %} 
+{% block content %} 
+
+
+
+    <div class="coursename">
+        <h1>{{course}}</h1>
+    </div>
+   
+
+
+<div class="one">
+<div class="navigation">
+    <p>Navigation</p>
+    <button class="navbtn">Registered Courses - </button>
+    <div class="course">
+        <ol>
+        {% for c in user.new_user.instructor.course_set.all %} 
+        <li><a href="{% url 'coursepage' id=c.course_id %}">{{c}}</a></li>
+        {% endfor %} 
+        </ol>
+    </div>
+</div>
+
+{% block override %} 
+<div class="contents">
+    <ul>
+        <!-- <li><a href='{% url "show_grades" id=course.course_id %}'>Grades</a></li> -->
+        <li><a href="{% url 'create_thread' id=course.course_id %}" >General Discussion Forum</a></li>
+        <li><a href="{% url 'announcement' id=course.course_id %}" >Announcements</a></li>
+        <!-- <li><a href='{% url "view_quizes" id=course.course_id %}'>Quizes</a></li> -->
+        <li><a href='{% url "create_section" id=course.course_id %}'><button class="create_section">Create Section</button></a></li>
+        <!-- <li><a href='{% url "question_bank" id=course.course_id %}'><button class="quiz">See Question Bank</button></a></li>
+        <li><a href='{% url "create_quiz" id=course.course_id %}'><button class="quiz">Create Quiz</button></a></li> -->
+        
+    </ul>
+    {% block hidden %}
+    {% if messages %} 
+        {% for message in messages %} 
+        <p>{{message}}</p>
+        {% endfor %} 
+    {% endif %} 
+    {% endblock hidden %}
+</div> 
+
+{% endblock override %}  
+
+{% block stdregis %} 
+<!-- <div class="instructors">
+    <h1>Student Registered</h1>
+</div> 
+</div> -->
+{% endblock stdregis %} 
+
+
+
+{% block sections %} 
+<div class="sections">
+    {% for section in course.section_set.all %}
+    <div class="section {{section}}"> 
+        <span><h1>{{section}} {{section.time_stamp|date:'d M Y'}}</h1></span>
+        <span><a href="{% url 'delete_section' id=section.course.course_id pk=section.id %}"><button>Delete Section</button></a></span>
+        <br><br>
+        <div class="files_and_folders">
+            {% for file in section.docs_set.all %}
+            {% if file.folder.folder_name == '' %}
+            <div style="background-color:blue">
+                <a href='{{file.document.url}}' target="blank">{{file.file_name}}</a>
+                <br><br>
+                <div>{{file.desc}}</div>
+                <br>
+                <span>
+                    <a href="{% url 'delete_file' id=section.course.course_id pk=file.id %}"><button>Delete File</button>
+                    </a>
+                </span>
+            </div>
+            <br>
+            {% endif %} 
+            {% endfor %} 
+
+
+            {% for folder in section.folder_set.all %} 
+            {% if folder.folder_name != '' %} 
+            <div style="background-color:blue">
+                <a href='{% url "showfolder" id=course.course_id section_id=section.section_name folder_name=folder.folder_name  %}'  target="blank">{{folder.folder_name}}</a>
+                
+                <br><br>
+                <div>{{folder.desc}}</div>
+                <br>
+                <span>
+                    <a href="{% url 'delete_folder' id=section.course.course_id pk=folder.id %}"><button>Delete Folder</button>
+                    </a>
+                </span>
+            </div>
+            <br>
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        <div >
+            <a href = "{% url 'uploadfile'  id=course.course_id section_id=section.section_name %}"> <button>Add file</button></a>
+            <a href = "{% url 'uploadfolder' id=course.course_id section_id=section.section_name%}"><button>Add folders</button></a>
+        </div>
+        
+    </div>
+    <hr>
+    {% endfor %} 
+</div>
+{% endblock sections %} 
+
+{% block script %}
+{% endblock script %} 
+
+{% endblock %} 

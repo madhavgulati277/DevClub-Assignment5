@@ -1,0 +1,15 @@
+{% extends 'grades/instructor_course.html' %} 
+
+{% block sections %} 
+<div>
+    <h1>Create Quiz</h1>
+    <form method = 'POST'>
+        <fieldset>
+            <legend>Make a Quiz</legend>
+            {% csrf_token %} 
+            {{ form.as_p }}
+            <input type="submit" value="Create">
+        </fieldset>
+    </form>
+</div>
+{% endblock sections %} 

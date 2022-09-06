@@ -1,0 +1,16 @@
+{% extends 'grades/instructor_course.html' %} 
+
+{% block override %} 
+
+<h1>{{folder}}</h1>
+<ol>
+{% for file in folder.docs_set.all  %} 
+<li><a href="{{file.document.url}}" target="blank">{{file}}</a></li>
+{% endfor %} 
+</ol>
+
+{% endblock %} 
+
+{% block sections %}
+
+{% endblock %}

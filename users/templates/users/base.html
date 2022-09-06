@@ -1,0 +1,81 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+     
+    <head>
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        {% block head %} 
+        {% endblock %}
+        <link rel = "stylesheet" href= "{% static 'users/base.css' %}">
+        <script defer src = "{% static 'users/base.js' %} "></script>
+        {% block scripts_and_styles %} 
+        {%endblock %} 
+        <meta charset = "utf-8">
+    </head>
+    
+
+    <body>
+        <div class="master">
+        <div class="content_wrap">
+        <header >
+            <div class="navbar">
+           <div class = 'left'>Moodle</div><div class="right">
+                <ul>
+                {% if user.is_authenticated %}
+                {% block nav_bar_content %}
+                <li>
+
+                    <div class="dropdown_content">
+                        <button class="dropdown_btn"> {{ user.username }} </button>
+                        <div class="dropdown">
+                            <a href="{% url 'dashboard' %}" >Dashboard</a>
+                            
+                            <a href="{% url 'profile' %}" >Profile</a>
+                            <a href="{% url 'logout' %}" >Log Out</a>
+                        </div>
+                    </div>
+                    
+                    
+                </li> 
+                {% endblock nav_bar_content %} 
+
+                {% else %} 
+                <li>You are logged out</li>
+                {% endif %} 
+                </ul>
+               
+            </ul>
+
+           </div>
+            </div>
+        </header>
+        
+
+
+        {% block content %} 
+
+        {% endblock %} 
+        </div>
+        {% block footer %} 
+        {% if user.is_authenticated %} 
+        <footer>
+            <div class = 'footer'>
+                
+                
+                <div>You are Logged in as {{user.username}}</div>
+                    <a href="{% url 'logout' %}">(Log out)</a> 
+                    <div> <a href='{%url "dashboard" %}'>Dashboard</a></div>
+                
+                
+            </div>
+        </footer>
+        {% else %} 
+                
+        {% endif %} 
+        {% endblock footer %}
+        </div> 
+    </body>
+</html>

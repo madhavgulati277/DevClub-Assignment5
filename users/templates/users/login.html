@@ -1,0 +1,58 @@
+{% extends 'users/base.html' %} 
+{% load static %} 
+
+{% block scripts_and_styles %} 
+<style>
+    .hm{
+        display:none 
+    }
+</style>
+
+{%endblock %}
+
+{% block title %} 
+Login Page 
+{% endblock title %} 
+
+
+{% block content %} 
+<div class="log-in">
+<h1> IIT DELHI ONLINE LMS BUILT BY ME</h1>
+<h2 class = 'login_title'>LOG IN</h2>
+<div class="hm">
+{% if messages %} 
+{% for message in messages %} 
+<div class="alert">{{message }}</div>
+{% endfor %} 
+{% endif %} 
+</div>
+
+    <form method = "POST">
+        {% csrf_token %}
+        <div class = 'login_title'>
+            {{form.as_p}}
+        </div>
+        <br>
+        <button type = "submit" class = 'login_title'>Login</button>
+    </form>
+    <br>
+    <div class="register"><a href="{% url 'register' %}">
+        Register here 
+    </a>
+    </div>
+    <div>
+        <span class = 'login_title'>Forgot your password?? <a href = "{% url 'password_reset' %}" style = "text-decoration : none ; color:white"> Click here</a>
+    </div>
+
+
+</div>
+<script>
+     let msgs = document.querySelectorAll('.alert');
+    for (msg  of msgs){
+        alert(msg.textContent);
+        
+    }
+</script>
+
+
+{% endblock content %} 

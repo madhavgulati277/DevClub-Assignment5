@@ -1,0 +1,94 @@
+{% extends 'users/base.html' %} 
+{% load static %} 
+
+{% block title %} 
+{{course}}
+{% endblock %} 
+{% block scripts_and_styles %} 
+<link href = '{% static "grades/course.css" %}' rel="stylesheet">
+<script defer src="{% static 'grades/course.js' %}"></script>
+{% endblock %} 
+{% block content %} 
+
+
+
+    <div class="coursename">
+        <h1>{{course}}</h1>
+    </div>
+   
+
+
+<div class="one">
+<div class="navigation">
+    <p>Navigation</p>
+    <button class="navbtn">Registered Courses - </button>
+    <div class="course">
+        <ol>
+        {% for c in user.new_user.student.course_set.all %} 
+        <li><a href="{% url 'coursepage' id=c.course_id %}">{{c}}</a></li>
+        {% endfor %} 
+        </ol>
+    </div>
+</div>
+
+{% block override %} 
+<div class="contents">
+    <ul>
+        <!-- <li><a href='{% url "view_quizes" id=course.course_id %}'>Quizes</a></li>
+        <li><a href='{% url "show_grades" id=course.course_id %}'>Grades</a></li> -->
+        <li><a href="{% url 'announcement' id=course.course_id %}">Announcements</a></li>
+        <li><a href="{% url 'create_thread' id=course.course_id %}" >General Discussion Forum</a></li>
+    </ul>
+</div> 
+{% endblock override %} 
+
+<!-- <div class="instructors">
+    <h1>Instructor</h1>
+   {{ course.course_instructor }}
+</div>
+</div> -->
+
+{% block sections %} 
+<div class="sections">
+    {% for section in course.section_set.all %}
+    <div class="section {{section}}"> 
+        <h1>{{section}} {{section.time_stamp|date:'d M Y'}}</h1>
+        <div class="files_and_folders">
+            {% for file in section.docs_set.all %}
+            {% if file.folder.folder_name == '' %}
+            <div style="background-color:blue">
+                <a href='{{file.document.url}}' target="blank">{{file.file_name}}</a>
+                <br><br>
+                <div>{{file.desc}}</div>
+            </div>
+            <br>
+            {% endif %} 
+            {% endfor %} 
+
+
+            {% for folder in section.folder_set.all %} 
+            {% if folder.folder_name != '' %} 
+            <div style="background-color:blue">
+                <a href='{% url "showfolder" id=course.course_id section_id=section.section_name folder_name=folder.folder_name  %}'  target="blank">{{folder.folder_name}}</a>
+                <br><br>
+                <div>{{folder.desc}}</div>
+            </div>
+            <br>
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        
+        
+    </div>
+    <hr>
+    {% endfor %} 
+</div>
+{% endblock sections %} 
+
+
+
+{% block script %} 
+{% endblock script%}
+
+{% endblock %} 

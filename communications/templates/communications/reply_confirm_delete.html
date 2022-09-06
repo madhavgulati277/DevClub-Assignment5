@@ -1,0 +1,24 @@
+{% extends 'grades/instructor_course.html' %} 
+{% load static %} 
+
+
+{% block sections %} 
+{% endblock %} 
+
+{% block override %}
+<div class="contents">
+    <form method="POST">
+        {% csrf_token %} 
+        <p>Are you sure you want to delete {{object}} ?</p>
+        <button class="delete" type="submit">Yes, Delete it</button>
+        <a class="cancel" href="{% url 'thread' id=object.course.course_id t_id=object.thread.id %}"><img class="cancel" src="/media/cancel.png">Cancel</a>
+    </form>
+    
+</div>
+
+
+
+{% endblock %} 
+
+{% block hidden %} 
+{% endblock %} 

@@ -1,0 +1,20 @@
+{% extends 'grades/instructor_course.html' %}
+
+{% block sections %} 
+<div>
+
+    <ul>
+        <pre>Student name                   grade</pre>
+        {% for student, marks in list%} 
+        <li><pre>
+             {{student}}                      {{marks}}                      
+        </pre>
+        </li>
+        {% endfor %} 
+        
+    </ul>
+</div>
+
+
+
+{% endblock sections %} 

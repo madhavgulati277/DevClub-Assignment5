@@ -1,0 +1,93 @@
+{% extends 'grades/student_course.html' %} 
+{% load static %} 
+{% block scripts_and_styles %}
+        <link href = '{% static "grades/course.css" %}' rel="stylesheet">
+        <script defer src="{% static 'grades/course.js' %}"></script>
+        <script defer src="{% static 'grades/course2.js' %}"></script>
+
+        {% if flag %} 
+        <style>
+            
+            .reply_form{
+                display : none
+            }
+        </style>
+        {% else %} 
+        <style>
+            
+            .reply_form{
+                display : 'inline-block'
+            }
+        </style>
+        {% endif %} 
+
+{% endblock %} 
+        
+
+{% block head %} 
+{{form.media}}
+{% endblock head %}
+
+
+{% block override %} 
+<h1>{{thread.title}}</h1>
+
+{{thread.text|safe}}
+{% if user == thread.author %} 
+<div>
+    <a href="{% url 'delete_thread' id=course.course_id pk=thread.id%}"><button>Delete Thread</button></a>
+    <a href="{% url 'update_thread' id=course.course_id pk=thread.id %}"><button>Update Thread</button></a>
+</div>
+{% endif %} 
+<button class="create_reply">Reply</button>
+
+{% if messages %} 
+        {% for message in messages %} 
+        <p>{{message}}</p>
+        {% endfor %} 
+{% endif %} 
+
+<div class="reply_form" >
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %} 
+    {{form.as_p}}
+    <input type="submit" value="Create Reply">
+</form>
+</div>
+
+
+{% for reply in thread.reply_set.all reversed %} 
+<p>{{reply.subject}} by {{reply.user.username}} - {{ reply.timestamp|time:"H:i a" }} {{ reply.timestamp|date:"D d M Y" }} </p>
+{% if user == reply.user %} 
+<div>
+    <a href="{% url 'delete_reply' id=course.course_id t_id=reply.thread.id pk=reply.id%}"><button>Delete Reply</button></a>
+    <a href="{% url 'update_reply' id=course.course_id t_id=reply.thread.id pk=reply.id %}"><button>Update Reply</button></a>
+{% endif %}
+{{reply.text|safe}}
+<div>
+    {% for file in reply.replydocs_set.all %} 
+    <div><a href="{{file.document.url}}" target="_blank">{{file}}</a></div>
+    {% endfor %} 
+</div>
+<hr>
+{% endfor %} 
+
+
+{% endblock override %}
+
+{% block sections %} 
+{% endblock sections %} 
+
+
+
+{% block script %} 
+
+<script>
+    btn = document.querySelector('.create_reply')
+    form = document.querySelector('.reply_form')
+    btn.addEventListener('click' , () =>{
+        form.style.display = 'inline-block' 
+    })
+</script> 
+{% endblock script%}
+

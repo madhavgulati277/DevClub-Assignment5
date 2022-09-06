@@ -1,0 +1,8 @@
+{% extends 'grades/student_course.html' %} 
+
+{% block override %} 
+<div>
+    <p>Quiz submitted.</p>
+    <a href="{% url 'coursepage' id=course.course_id %}">Back to course page</a>
+</div>
+{% endblock override %

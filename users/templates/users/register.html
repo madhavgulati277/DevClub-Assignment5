@@ -1,0 +1,26 @@
+{% extends 'users/base.html' %} 
+
+
+{% block content %} 
+<h1>
+    Registration Page
+</h1>
+<fieldset>
+    <legend>Enter Your Details</legend>
+    <form method="POST">
+        {% csrf_token %} 
+        {{form.as_p}}
+        <br>
+        
+        <input type="radio" value="student" id="stud" checked name="role">
+        <label for="stud">As Student</label>
+        
+        <input type="radio" value="instructor" id="inst" name="role">
+        <label for="inst">As Instructor</label>
+        <br><br>
+        <input type="submit" value="Register">
+
+    </form>
+</fieldset>
+<a href="{% url 'login' %}">Back to Login Page</a>
+{% endblock %} 

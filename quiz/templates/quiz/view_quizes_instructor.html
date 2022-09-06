@@ -1,0 +1,16 @@
+{% extends 'grades/instructor_course.html' %} 
+
+{% block sections %} 
+<div>
+    <h1>Quizes</h1>
+    <div class="question">
+        <ul>
+    {% for quiz in course.quiz_set.all %} 
+        <li><a href = "{% url 'display_quiz' id=course.course_id name=quiz.quiz_name %}">{{quiz.quiz_name}}</a></li>
+    {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+{% endblock sections %} 

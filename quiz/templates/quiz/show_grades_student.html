@@ -1,0 +1,16 @@
+{% extends 'grades/student_course.html' %}
+
+{% block sections %} 
+<div class="question">
+    <h1>Quiz Grades</h1>
+    <ul>
+        
+    {% for quiz, marks, total_marks in list %} 
+        <li>
+        <p>{{quiz.quiz_name}}   obtained grade- {{marks}}/{{total_marks}}</p>
+        </li>
+    {% endfor %} 
+        
+    </ul>
+</div> 
+{% endblock sections %} 

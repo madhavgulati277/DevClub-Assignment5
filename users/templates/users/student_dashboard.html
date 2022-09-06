@@ -1,0 +1,86 @@
+{% extends 'users/base.html' %}
+{% load static %} 
+
+{% block scripts_and_styles %} 
+<script defer src="{% static 'users/student_dashboard.js' %}"></script>
+<link rel="stylesheet" href="{% static 'users/student_dashboard.css' %}">
+{% endblock %}
+
+{%block title %} 
+Dashboard
+{% endblock title %}
+
+
+
+{%block content %} 
+<div class="user-content">
+    <div class="img">
+        <img src = "{{user.new_user.student.profile_pic.url}}" >
+    </div>
+    <div class="username">
+        <p >{{user.username}}</p>
+    </div>
+    
+</div>
+
+
+
+<div class="dashboard">
+    <p>Dashboard</p>
+</div>
+
+<div class="container">
+<div class="course">
+    <p> Courses Registered</p>
+    <ol>
+    {% for course in  user.new_user.student.course_set.all %}
+    <li><a href= "{% url 'coursepage' id=course.course_id %}">{{course}}</a></li>
+    {% endfor %} 
+    </ol>
+</div>
+
+<div class="allcourses">
+    <div class="title">
+        All Courses
+    </div>
+    <div class="button">
+    <button class = 'inprogress_btn'>In Progress</button><button class = 'past_btn'>Past</button><button class = 'future_btn'>Future</button>
+    </div>
+    <div class="inprogress">
+        <ol>
+            {% for course in  user.new_user.student.course_set.all %}
+            {% if course.in_progress %} 
+            <li><a href= "{% url 'coursepage' id=course.course_id %}">{{course}}</a></li>
+            {% endif %} 
+            {% endfor %} 
+        </ol>
+    </div>
+
+    <div class="past">
+        <ol>
+            {% for course in  user.new_user.student.course_set.all %}
+            {% if course.past %} 
+            <li><a href= "{% url 'coursepage' id=course.course_id %}">{{course}}</a></li>
+            {% endif %} 
+            {% endfor %} 
+        </ol>
+    </div>
+
+    <div class="future">
+        <ol>
+            {% for course in  user.new_user.student.course_set.all %}
+            {% if course.future %} 
+            <li><a href= "{% url 'coursepage' id=course.course_id %}">{{course}}</a></li>
+            {% endif %} 
+            {% endfor %} 
+        </ol>
+    </div>
+</div>
+</div>
+
+
+{% endblock content %} 
+
+
+
+ 

@@ -1,0 +1,75 @@
+{% extends 'grades/student_course.html' %}
+{% load static %} 
+{% block scripts_and_styles %}
+        <link href = '{% static "grades/course.css" %}' rel="stylesheet">
+        <script defer src="{% static 'grades/course.js' %}"></script>
+        <script defer src="{% static 'grades/course2.js' %}"></script>
+
+        {% if flag %} 
+        <style>
+            .thread_form{
+                display : none
+            }
+            
+        </style>
+        {% else %} 
+        <style>
+            .thread_form{
+                display : inline-block
+            }
+            
+        </style>
+        {% endif %} 
+        {% endblock %} 
+        
+
+{% block head %} 
+{{form.media}}
+{% endblock head %} 
+
+{% block override %} 
+<div class="threads">
+<ul>
+    <li>
+        <h2>General Discussion Forum</h2>
+    </li>
+{% for thread in course.thread_set.all %} 
+
+<li><a href="{% url 'thread' id=course.course_id t_id=thread.id %}">{{thread.title}}</a></li>
+
+{% endfor %} 
+<li><button class="create_thread">Create thread</button></li>
+</ul>
+</div>
+
+{% if messages %} 
+        {% for message in messages %} 
+        <p>{{message}}</p>
+        {% endfor %} 
+{% endif %}
+
+
+
+{% endblock override %} 
+
+{% block sections %} 
+<div class="thread_form">
+    <form method="POST" >
+        {% csrf_token %} 
+        {{form.as_p}}
+        <input type="submit" value="Create thread">
+    </form>
+</div>
+{% endblock sections %} 
+
+
+{% block script %}
+<script>
+btn = document.querySelector('.create_thread')
+form = document.querySelector('.thread_form')
+btn.addEventListener('click' , () =>{
+    form.style.display = 'inline-block' 
+    
+})
+</script> 
+{% endblock script %} 

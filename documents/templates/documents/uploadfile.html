@@ -1,0 +1,52 @@
+{% extends 'grades/instructor_course.html' %} 
+{% load static %} 
+{% block scripts_and_styles %} 
+<link href = '{% static "grades/course.css" %}' rel="stylesheet">
+<script defer src="{% static 'grades/course.js' %}"></script>
+<script defer src="{% static 'grades/course2.js' %}"></script>
+<style>
+    .hidden{
+        display:none ;
+    }
+</style>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+{% block hidden %} 
+<div class="hidden">
+    <div class="msg">
+    {% if messages %}
+    {% for message in messages %} 
+    <p>{{message}}</p>
+    {% endfor %}
+    {% endif %}
+    </div>
+    <form  method = "post" enctype="multipart/form-data">
+        {% csrf_token %} 
+        <div>
+        {{ form.as_p}}
+        </div>
+        <input  type="submit" value="Upload">
+    </form>
+</div>
+
+{% endblock hidden %} 
+
+{% block script %} 
+<script >
+    let section = document.querySelector('.{{section}}')
+    let form = document.querySelector('.hidden')
+    section.appendChild(form , true)
+    form.style.display = 'inline-block'
+
+</script>
+{% endblock script %}  

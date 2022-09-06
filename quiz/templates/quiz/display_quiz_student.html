@@ -1,0 +1,72 @@
+{% extends 'grades/student_course.html' %} 
+
+{% block override %} 
+{% endblock override %} 
+
+{% block sections %} 
+<div>
+    <h1>{{quiz.quiz_name}}    {{marks}} marks</h1>
+    <form method = "POST" id="form">
+    {% csrf_token %} 
+    {% for question in quiz.question_set.all %}
+    {% if question.mcq_flag %} 
+    <div class="question">
+        
+            <div style = "size: 2em;">{{question.question}}  -{{question.marks}} marks</div>
+            <span id="duration">Duration <span id="hours">{{duration.hour}}</span> hours <span id="minutes">{{duration.minute}}</span> minute <span id="seconds">{{duration.second}}</span> seconds</span>
+            <div>
+                <input type="radio" id="option1" name="{{question.pk}}" value='1'>
+                <label for="option1">{{option1}}</label>
+
+                <input type="radio" id="option2" name="{{question.pk}}" value='2'>
+                <label for="option2">{{option2}}</label>
+
+                <input type="radio" id="option3" name="{{question.pk}}" value='3'>
+                <label for="option3">{{option3}}</label>
+
+                <input type="radio" id="option4" name="{{question.pk}}" value='4'>
+                <label for="option4">{{option4}}</label>
+            </div>
+           
+    </div>
+    <br>
+    {% elif not question.mcq_flag %} 
+    <div class="question">
+            <div style = "size: 2em;">{{question.question}}  -{{question.marks}} marks</div>
+            <div>
+                <label for="answer">Enter Answer</label>
+                <textarea id="answer" name="{{question.pk}}" rows="4" cols="50"></textarea>
+            </div>
+    </div>
+    <br>
+    {% endfor %}  
+    <input  type="submit" value = "Submit Quiz">
+    </form>
+
+
+</div>
+
+
+{% endblock sections %} 
+
+
+{% block script %} 
+<script>
+const duration = document.getElementById('duration')
+const hours = Number(document.getElementById('hours'))
+const minutes = Number(document.getElementById('minutes'))
+const seconds = Number(document.getElementById('seconds'))
+const time = hours*3600 + minutes*60 + seconds
+
+const form = document.getElementById('form')
+function submit(){
+    form.submit()
+}
+const myTimeout = setTimeout(submit, time*1000);
+
+
+</script>   
+
+
+
+{% endblock script %} 

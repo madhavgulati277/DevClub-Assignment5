@@ -1,0 +1,19 @@
+{% extends 'grades/instructor_course.html' %} 
+{% load static %} 
+
+{% block hidden %} 
+<div class="create_section">
+    <div >Create Section</div>
+    
+    
+        <form method="POST">
+            {% csrf_token %} 
+            <div>{{form.as_p}}</div>
+            <input type="submit" value="Add Section">
+            <a href="{% url 'coursepage' course.course_id %}"><button>Cancel</button></a>
+        </form>
+    
+    
+
+</div>
+{% endblock hidden %}

@@ -1,0 +1,39 @@
+{% extends 'grades/instructor_course.html' %} 
+
+{% block sections %} 
+<div>
+    <h2>Question Bank questions</h2>
+    
+    
+    {% for question in question_bank.question_set.all %}
+
+        {% if question.mcq_flag %} 
+        <div class="question">
+            <div style = "size: 2em;">{{question.question}}  -{{question.marks}} marks</div>
+            <div style = "size: 1em;">(A) {{question.mcq_question.option1}}</div>
+            <div style = "size: 1em;">(B) {{question.mcq_question.option2}}</div>
+            <div style = "size: 1em;">(C) {{question.mcq_question.option3}}</div>
+            <div style = "size: 1em;">(D) {{question.mcq_question.option4}}</div>
+            {% if question.mcq_question.answer == 1 %} 
+            <div style = "size: 1em;">Right answer : A </div>
+            {% elif question.mcq_question.answer == 2 %} 
+            <div style = "size: 1em;">Right answer : B </div>
+            {% elif question.mcq_question.answer == 3 %} 
+            <div style = "size: 1em;">Right answer : C</div>
+            {% elif question.mcq_question.answer == 4 %} 
+            <div style = "size: 1em;">Right answer : D</div>
+            {% endif %} 
+        </div>
+        <br>
+        {% elif not question.mcq_flag %} 
+        <div class="question">
+            <div style = "size: 2em;">{{question.question}}   -{{question.marks}} marks</div>
+            <div style="size: 1em;">{{question.subjective_question.answer}}</div>
+        </div>
+        <br>
+        {% endif %} 
+    {% endfor %} 
+    
+    
+</div>
+{% endblock sections %} 

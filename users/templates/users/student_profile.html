@@ -1,0 +1,86 @@
+{% extends 'users/base.html' %} 
+{% load static %}
+
+
+{% block title%} 
+Profile Page 
+{% endblock %} 
+{% block scripts_and_styles %} 
+<link rel="stylesheet" href="{% static 'users/profile.css' %}">
+{%endblock %} 
+
+{% block content %} 
+
+{% if messages %}
+{% for message in messages %} 
+<p>{{message}}</p>
+{% endfor %}  
+{% endif %} 
+
+
+<div class="user-content">
+    <div class="img">
+        <img src = "{{user.new_user.student.profile_pic.url}}" >
+    </div>
+    <div class="username">
+        <p >{{user.username}}</p>
+    </div>
+    <div class="user_details">
+        <h1>User Details</h1>
+        <div class="email">
+            <p>Email Address-</p>
+            <p class="p">{{user.email}}</p>
+        </div>
+        <div class="entryno">
+            <p>Entry Number-</p>
+            <p class="p">{{user.new_user.student.entry_no }}</p>
+        </div>
+    </div>
+    <div>
+        <a href="{% url 'update_profile' %}" >Update Profile</a>
+    </div>
+</div>
+
+<div class="upcoming">
+    <h1>Upcoming Courses</h1>
+    <ol>
+    {% for course in user.new_user.student.course_set.all %} 
+    {% if course.future %} 
+    <li><a href=" {% url 'coursepage' id=course.course_id %}">{{course }}</a></li>
+    {% endif %} 
+    {% endfor %}
+    </ol>
+</div>
+
+
+<div class="profile">
+    <p>Profile Page</p>
+</div>
+
+<div class="past_current">
+<div class="past">
+    <p> Completed Courses</p>
+    <ol>
+    {% for course in  user.new_user.student.course_set.all %}
+    {% if course.past %}
+    <li><a href=" {% url 'coursepage' id=course.course_id%}">{{course}}</a></li>
+    {% endif %} 
+    {% endfor %} 
+    </ol>
+</div>
+
+<div class="current">
+    <p>Registered Courses</p>
+    <ol>
+        {% for course in  user.new_user.student.course_set.all %}
+        {% if course.in_progress %}
+        <li><a href=" {% url 'coursepage' id=course.course_id %}">{{course}}</a></li>
+        {% endif %} 
+        {% endfor %} 
+    </ol>
+</div>
+</div>
+
+
+
+{% endblock content %} 

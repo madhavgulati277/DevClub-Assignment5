@@ -1,0 +1,21 @@
+{% extends 'grades.instructor_course.html' %} 
+
+{% block sections %} 
+<div>
+    <h1>Quizes</h1>
+    <div class="question">
+        <ul>
+    {% for quiz, status in list %} 
+    
+    {% if status=="open" %}
+        <li><p>{{quiz}}           <a href = "{% url 'display_quiz' id=course.course_id name=quiz %}"><button>Attempt</button></a></p></li>
+    {% elif status=="overdue" %}
+        <li><p>{{quiz}}           Closed</p></li>
+    {% endif %} 
+    {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+{% endblock sections %} 

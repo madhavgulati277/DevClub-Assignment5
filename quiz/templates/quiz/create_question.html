@@ -1,0 +1,82 @@
+{% extends 'grades/instructor_course.html' %} 
+
+
+
+{% block sections %} 
+
+
+<div class="buttons">
+    <button class="mcq">Add Multiple Choice Question</button>
+    <button class="sub">Add Subjective Question</button>
+</div>
+
+<div class="mcq_form">
+    <form method = "POST">
+        {% csrf_token %} 
+        <fieldset>
+            <legend>Create MCQ question</legend>
+            {{mcq_form.as_p}}
+            <!-- <div>Answer-
+                <div>
+                    <label for="one">Option 1</label>
+                    <input type="radio" id="one" name="answer" value="1">
+                </div>
+                <div>
+                    <label for="two">Option 2</label>
+                    <input type="radio" id="two" name="answer" value="2">
+                </div>
+                <div>
+                    <label for="one">Option 3</label>
+                    <input type="radio" id="three" name="answer" value="3">
+                </div>
+                <div>
+                    <label for="one">Option 4</label>
+                    <input type="radio" id="four" name="answer" value="4">
+                </div>
+            </div> -->
+            <input type="hidden" name="type" value="mcq">
+            <input type="submit" name="Create">
+        </fieldset>
+
+    </form>
+</div>
+
+<div class="sub_form">
+    <form method = "POST">
+        {% csrf_token %} 
+        <fieldset>
+            <legend>Create subjective question</legend>
+            {{sub_form.as_p}}
+            
+            <input type="hidden" name="type" value="sub">
+            <input type="submit" name="Create">
+        </fieldset>
+
+    </form>
+</div>
+
+{% endblock sections %} 
+
+
+{% block script %}
+<script>
+    const btn1 = document.querySelector('.mcq')
+    const btn2 = document.querySelector('.sub')
+    const mcq_form = document.querySelector('.mcq_form')
+    const sub_form = document.querySelector('.sub_form')
+    mcq_form.style.display = 'none'
+    sub_form.style.display = 'none'
+
+    btn1.addEventListener('click' , () =>{
+        mcq_form.style.display = 'block'
+        sub_form.style.display = 'none'
+    })
+
+    btn2.addEventListener('click' , () =>{
+        mcq_form.style.display = 'none'
+        sub_form.style.display = 'block'
+        
+    })
+
+</script>
+{% endblock script %} 

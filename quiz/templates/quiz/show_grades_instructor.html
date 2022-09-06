@@ -1,0 +1,16 @@
+{% extends 'grades/instructor_course.html' %}
+
+{% block sections %} 
+<div>
+
+    <ul>
+        Click on the quiz to see marks of students in that quiz.
+        {% for quiz in list  %} 
+        <li><a href="{% url 'show_all_grades' id=course.course_id name=quiz.quiz_name %}">{{quiz.quiz_name}}</a></li>
+        {% endfor %} 
+    </ul>
+</div>
+
+
+
+{% endblock sections %} 

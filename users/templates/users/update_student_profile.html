@@ -1,0 +1,15 @@
+{% extends 'users/base.html' %} 
+{% block content %} 
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %} 
+    <div>
+        {{u_form.as_p}}
+        {{s_form.as_p}}
+    </div>
+    <input type="submit" value = "Update Profile">
+</form>
+
+
+
+{% endblock content %} 

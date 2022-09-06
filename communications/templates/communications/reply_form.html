@@ -1,0 +1,87 @@
+{% extends 'grades/instructor_course.html' %} 
+{% load static %} 
+{% block scripts_and_styles %}
+        <link href = '{% static "grades/course.css" %}' rel="stylesheet">
+        <script defer src="{% static 'grades/course.js' %}"></script>
+        <script defer src="{% static 'grades/course2.js' %}"></script>
+
+        
+
+{% endblock %} 
+        
+
+{% block head %} 
+{{form.media}}
+{% endblock head %}
+
+
+{% block override %} 
+<h1>{{thread.title}}</h1>
+{% if user == thread.author %} 
+<div>
+    <a href="{% url 'delete_thread' id=course.course_id pk=thread.id %}"><button>Delete Thread</button></a>
+    <a href="{% url 'update_thread' id=course.course_id pk=thread.id %}"><button>Update Thread</button></a>
+</div>
+{% endif %} 
+{{thread.text|safe}}
+
+
+
+{% if messages %} 
+        {% for message in messages %} 
+        <p>{{message}}</p>
+        {% endfor %} 
+{% endif %} 
+
+
+
+
+{% for reply in thread.reply_set.all reversed %} 
+<p>{{reply.subject}} by {{reply.user.username}} - {{ reply.timestamp|time:"H:i a" }} {{ reply.timestamp|date:"D d M Y" }} </p>
+{% if user == reply.user %} 
+<div>
+    <a href="{% url 'delete_reply' id=course.course_id t_id=thread.id pk=reply.id %}"><button>Delete Reply</button></a>
+    <a href="{% url 'update_reply' id=course.course_id t_id=thread.id pk=reply.id %}"><button>Update Reply</button></a>
+</div>
+{% endif %} 
+<p>{{reply.text|safe}}</p>
+<ul>
+    {% for file in reply.replydocs_set.all %} 
+    <li><a href="{{file.document.url}}" target="_blank">{{file}}</a></li>
+    {% endfor %} 
+</ul>
+{% if reply == object %} 
+<div class="reply_form" >
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %} 
+        {{form.as_p}}
+        <input type="submit" value="Update">
+    </form>
+</div>
+{% endif %} 
+<hr>
+{% endfor %} 
+
+
+{% endblock override %} 
+
+
+{% block hidden %} 
+{% endblock %} 
+
+{% block sections %} 
+{% endblock sections %} 
+
+
+
+
+{% block script %}
+<!-- <script>
+btn = document.querySelector('.create_reply')
+form = document.querySelector('.reply_form')
+btn.addEventListener('click' , () =>{
+    form.style.display = 'inline-block' 
+    
+})
+</script>  -->
+{% endblock script %} 

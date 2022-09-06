@@ -1,0 +1,18 @@
+{% extends 'grades/student_course.html' %} 
+
+{% block sections %} 
+{% for ann in course.announcement_set.all reversed %} 
+
+<div id="{{ ann.id }}">
+    <h1>{{ann.title }}</h1>
+    <p>{{ann.text|safe}}</p>
+</div>
+{% empty %}
+<div id="none">
+    <p>Sorry, no announcements yet.</p>
+</div>
+{% endfor %} 
+{% endblock %} 
+
+
+

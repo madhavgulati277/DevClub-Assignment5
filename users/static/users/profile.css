@@ -1,0 +1,133 @@
+.img {
+    display:inline-block;
+    width:184px ;
+}
+
+img{
+    margin-top: 20px ;
+    margin-left : 30px;
+    height:150px ;
+    width:100px ;
+}
+
+.username{
+    display:inline-block;
+    height:150px ;
+    width : 200px ;
+
+}
+.user-content{
+    
+   display:inline-flex;
+   align-items:center;
+}
+
+.username p{
+    text-align:center;
+    position:relative;
+    top:50%;
+    margin:0;
+    font-size: 2.5em;
+    text-transform:capitalize;
+}
+
+.profile{
+    margin-left:30px;
+    font-size:2em;
+    width:300px;
+}
+
+.title{
+    text-align:center;
+} 
+
+.user_details{
+    display:inline-block ;
+    background-color: rgb(35, 33, 38);
+    margin-left: 150px;
+    border-radius:10px ;
+    margin-top:10px;
+    width:400px;
+    padding:10px;
+}
+
+h1{
+    font-size:1em ;
+    margin-top : 0;
+}
+
+.email{
+    margin-top:40px;
+    
+}
+
+.email , .entryno{
+    color:rgb(121, 123, 128);
+}
+
+.entryno .p , .email .p{
+    margin-left : 10px ;
+    margin-top:10px;
+    color:white;
+}
+
+.upcoming{
+    background-color:rgb(90, 88, 92);
+    border-color :rgb(35, 33, 38);
+    text-align:center ;
+    color:black ;
+    position:absolute ;
+    right: 3% ;
+    height:300px;
+    width:200px;
+    border-radius: 10px;
+    top : 30%;
+}
+
+.upcoming h1{
+    font-size: 1em;
+    margin:10px;
+}
+
+.past{
+    display : inline-block;
+    background-color: rgb(90, 88, 92);
+    color:black ;
+    width : 300px ;
+    height:300px ;
+    margin-left: 30px;
+    border-radius: 10px;
+    padding : 10px;
+    margin-right:20px;
+}
+
+.past p,.current p{
+    
+    font-weight: 700;
+}
+
+.current{
+    display : inline-block;
+    background-color: rgb(180, 183, 191);
+    color:black;
+    width : 300px ;
+    height:300px ;
+    margin-left: 150px;
+    border-radius: 10px;
+    padding : 10px;
+    margin-right:20px;
+}
+
+.past_current{
+    display:inline-flex;
+}
+
+.current a:hover{
+    background-color:rgb(180, 183, 191);
+    color:black;
+    text-decoration:underline;
+}
+
+.current a:visited{
+    color:black;
+}

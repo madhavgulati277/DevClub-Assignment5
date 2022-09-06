@@ -1,0 +1,105 @@
+{% extends 'grades/instructor_course.html' %} 
+{% load static %} 
+
+
+{% block head %} 
+{{ form.media }}
+{% endblock head %}
+        
+        
+        {% block scripts_and_styles %}
+        <link href = '{% static "grades/course.css" %}' rel="stylesheet">
+        <script defer src="{% static 'grades/course.js' %}"></script>
+        <script defer src="{% static 'grades/course2.js' %}"></script>
+
+
+        <style>
+            .ann_form{
+                display : inline-block
+            }
+            
+        </style>
+
+        {% endblock %} 
+        
+
+
+
+
+
+{% block override %}
+<div class="contents">
+    <ul>
+        <li><a href='#'>Grades</a></li>
+        <li><a href="{% url 'announcement' id=course.course_id %}" >Announcements</a></li>
+        <li><a href="{% url 'create_thread' id=course.course_id %}" >General Discussion Forum</a></li>
+        <li><a href='#'>Quizes</a></li>
+        <li><a href='{% url "create_section" id=course.course_id %}'><button class="create_section">Create Section</button></a></li>
+        <li><a href='#'><button class="quiz">Create Quiz</button></a></li>
+        
+    </ul>
+</div> 
+
+
+{% for ann in course.announcement_set.all reversed %} 
+
+<div class="content block" id="{{ ann.id }}">
+    <h1>{{ann.title }}</h1>
+    <p>{{ann.text|safe}}</p>
+</div>
+{% if user == ann.author %} 
+<span>
+    <a href="{% url 'delete_ann' id=ann.course.course_id pk=ann.id %}"><button>Delete Announcement</button>
+    </a>
+    <a class='update' href="{% url 'update_ann' id=ann.course.course_id pk=ann.id %}"><button>Update Announcement
+
+    </button>
+    </a>
+</span>
+{% endif %} 
+
+
+
+{% if ann == object %} 
+<br>
+<div class="ann_form">
+    <form method="POST">
+        {% csrf_token %} 
+        <div>{{form.as_p}}</div>
+        <input class = "submit" type="submit" value="Submit">
+    </form>
+</div>
+
+
+{% endif %}
+<hr>
+{% endfor %} 
+<br><br>
+<div>
+<button class="announcement">Create Announcement</button>
+</div>
+
+
+{% endblock %} 
+
+{% block sections %} 
+{% endblock %} 
+
+
+
+{% block script %}
+<script defer>
+    form = document.querySelector('.ann_form')
+    button = document.querySelector('.announcement')
+
+    button.addEventListener('click' , () => {
+        form.style.display = 'inline-block'
+    })
+
+    // update = document.querySelector('.update')
+    // submit_button = document.querySelector('.submit')
+    // submit_button.addEventListener('click' , ()=>{
+    //     update.display.style = 'none'
+    // })
+</script>
+{% endblock script %}
